@@ -24,14 +24,14 @@ public class DFS {
         Set<String> vertices = graph.getVertices();
         Set<String> visited = new HashSet<>();
 
-        for (String vertex : vertices) {
-            parent.put(vertex, null);
+        for (String v : vertices) {
+            parent.put(v, null);
         }
 
-        for (String vertex : vertices) {
-            if (!visited.contains(vertex)) {
+        for (String v : vertices) {
+            if (!visited.contains(v)) {
                 List<String> tree = new ArrayList<>();
-                dfsVisit(vertex, visited, tree);
+                dfsVisit(v, visited, tree);
                 dfsForest.add(tree);
             }
         }

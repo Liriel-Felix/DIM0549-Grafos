@@ -60,8 +60,8 @@ public class DotParser {
         return graph;
     }
 
-    private static String cleanVertexName(String vertex) {
-        return vertex.trim()
+    private static String cleanVertexName(String v) {
+        return v.trim()
                 .replace(";", "")
                 .replace("\"", "")
                 .replace("[", " ")
