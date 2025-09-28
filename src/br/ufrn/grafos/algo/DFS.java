@@ -4,11 +4,11 @@ import br.ufrn.grafos.model.Graph;
 import java.util.*;
 
 public class DFS {
-    private Graph graph;
-    private Map<String, Integer> discoveryTime;
-    private Map<String, Integer> finishTime;
-    private Map<String, String> parent;
-    private List<List<String>> dfsForest;
+    private final Graph graph;
+    private final Map<String, Integer> discoveryTime;
+    private final Map<String, Integer> finishTime;
+    private final Map<String, String> parent;
+    private final List<List<String>> dfsForest;
     private int time;
 
     public DFS(Graph graph) {
@@ -81,21 +81,5 @@ public class DFS {
                     parent.get(v) != null ? parent.get(v) : "null"
             );
         }
-    }
-
-    public Map<String, Integer> getDiscoveryTime() {
-        return discoveryTime;
-    }
-
-    public Map<String, Integer> getFinishTime() {
-        return finishTime;
-    }
-
-    public Map<String, String> getParent() {
-        return parent;
-    }
-
-    public List<List<String>> getDfsForest() {
-        return dfsForest;
     }
 }
