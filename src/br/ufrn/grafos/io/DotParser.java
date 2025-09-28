@@ -10,11 +10,6 @@ import java.io.IOException;
 public class DotParser {
     public static Graph parseDotFile(String filename) throws IOException {
         boolean directed = false;
-        String graphName = "";
-
-        if (filename.contains("directed")) {
-            directed = true;
-        }
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -22,9 +17,6 @@ public class DotParser {
                 line = line.trim();
                 if (line.startsWith("digraph")) {
                     directed = true;
-                    break;
-                } else if (line.startsWith("graph")) {
-                    directed = false;
                     break;
                 }
             }
