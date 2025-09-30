@@ -1,101 +1,89 @@
 package br.ufrn.grafos.algo;
 
+import br.ufrn.grafos.model.Graph;
+
 import java.util.*;
 
 public class BFS {
-    private final boolean directed;
-    private final List<String> vertices;
-    private final Map<String, Integer> indexByVertex;
-    private int[][] matrix;
+    private final Graph graph;
 
-    public BFS(boolean directed, int capacity) {
-        this.directed = directed;
-        this.vertices = new ArrayList<>();
-        this.indexByVertex = new HashMap<>();
-        this.matrix = new int[Math.max(1, capacity)][Math.max(1, capacity)];
+    private final Map<String, Integer> dist = new HashMap<>();
+    private final Map<String, String> parent = new HashMap<>();
+    private final List<String> visitOrder = new ArrayList<>();
+
+    public BFS(Graph graph) {
+        this.graph = Objects.requireNonNull(graph, "graph não pode ser null");
     }
 
-    public boolean isDirected() {
-        return directed;
+    public void execute() {
+        execute(null);
     }
 
-    public Set<String> getVertices() {
-        return new TreeSet<>(vertices);
-    }
+    public void execute(String source) {
+        List<String> vertices = new ArrayList<>(graph.getVertices());
+        Collections.sort(vertices);
 
-    public void addVertex(String v) {
-        if (indexByVertex.containsKey(v)) return;
-        ensureCapacity(vertices.size() + 1);
-        vertices.add(v);
-        indexByVertex.put(v, vertices.size() - 1);
-    }
+        if (vertices.isEmpty()) return;
 
-    public void addEdge(String u, String v) {
-        addVertex(u);
-        addVertex(v);
-        int i = indexByVertex.get(u);
-        int j = indexByVertex.get(v);
-        matrix[i][j] = 1;
-        if (!directed) matrix[j][i] = 1;
-    }
-
-    public Set<String> getNeighbors(String v) {
-        Integer i = indexByVertex.get(v);
-        if (i == null) return new TreeSet<>();
-        Set<String> neighbors = new TreeSet<>();
-        for (int j = 0; j < vertices.size(); j++) {
-            if (matrix[i][j] == 1) {
-                neighbors.add(vertices.get(j));
-            }
+        String s = (source != null) ? source : vertices.get(0);
+        if (!graph.getVertices().contains(s)) {
+            throw new IllegalArgumentException("Fonte '" + s + "' não existe no grafo.");
         }
-        return neighbors;
-    }
 
-    private void ensureCapacity(int required) {
-        int n = matrix.length;
-        if (required <= n) return;
-        int newN = Math.max(required, n * 2);
-        int[][] newMatrix = new int[newN][newN];
-        for (int i = 0; i < n; i++) {
-            System.arraycopy(matrix[i], 0, newMatrix[i], 0, n);
+        dist.clear();
+        parent.clear();
+        visitOrder.clear();
+        for (String v : vertices) {
+            dist.put(v, -1);
+            parent.put(v, null);
         }
-        matrix = newMatrix;
-    }
 
-    public void run() {
-        Set<String> ordered = getVertices();
-        if (ordered.isEmpty()) return;
-
-        String source = ordered.iterator().next();
-
-        Map<String, Integer> dist = new HashMap<>();
-        Map<String, String> parent = new HashMap<>();
-        Set<String> visited = new HashSet<>();
-        Queue<String> q = new ArrayDeque<>();
-
-        visited.add(source);
-        dist.put(source, 0);
-        parent.put(source, null);
-        q.add(source);
+        Deque<String> q = new ArrayDeque<>();
+        dist.put(s, 0);
+        q.add(s);
 
         while (!q.isEmpty()) {
-            String u = q.poll();
-            for (String w : getNeighbors(u)) {
-                if (!visited.contains(w)) {
-                    visited.add(w);
-                    parent.put(w, u);
+            String u = q.remove();
+            visitOrder.add(u);
+
+            List<String> neighbors = new ArrayList<>(graph.getNeighbors(u));
+            Collections.sort(neighbors);
+
+            for (String w : neighbors) {
+                if (dist.get(w) == -1) {
                     dist.put(w, dist.get(u) + 1);
+                    parent.put(w, u);
                     q.add(w);
                 }
             }
         }
+    }
 
-        System.out.println("--- Resultado BFS ---");
-        for (String v : ordered) {
+    public Map<String, Integer> getDistances() {
+        return Collections.unmodifiableMap(dist);
+    }
+
+    public Map<String, String> getParents() {
+        return Collections.unmodifiableMap(parent);
+    }
+
+    public List<String> getVisitOrder() {
+        return Collections.unmodifiableList(visitOrder);
+    }
+
+    public void printResults() {
+        List<String> vertices = new ArrayList<>(graph.getVertices());
+        Collections.sort(vertices);
+
+        System.out.println("=== RESULTADO BFS ===");
+        System.out.println("Ordem de visita: " + visitOrder);
+        System.out.println();
+        System.out.println(String.format("%-10s | %-9s | %-6s", "Vertice", "Distancia", "Pai"));
+        System.out.println("-----------|-----------|--------");
+        for (String v : vertices) {
             String p = parent.get(v);
-            int d = dist.getOrDefault(v, -1);
-            System.out.printf("Vértice: %s, Distância: %d, Pai: %s%n",
-                    v, d, (p == null ? "-" : p));
+            Integer d = dist.getOrDefault(v, -1);
+            System.out.println(String.format("%-10s | %-9d | %-6s", v, d, p == null ? "-" : p));
         }
     }
 }
