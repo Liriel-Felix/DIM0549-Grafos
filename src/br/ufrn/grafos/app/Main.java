@@ -11,12 +11,14 @@ public class Main {
             String undirectedPath = "samples/undirected_graph.gv";
             String directedPath   = "samples/directed_graph.gv";
 
-            System.out.println("=== GRAFO NÃO DIRECIONADO ===");
+            // Undirected Graph
 
             Graph gListUnd = DotParser.parseToList(undirectedPath);
             DFS dfsUnd = new DFS(gListUnd);
             dfsUnd.execute();
             dfsUnd.printResults();
+
+            System.out.println();
 
             Graph gMatUnd = DotParser.parseToMatrix(undirectedPath);
             BFS bfsUnd = new BFS(gMatUnd);
@@ -25,12 +27,14 @@ public class Main {
 
             System.out.println("\n" + "=".repeat(50) + "\n");
 
-            System.out.println("=== GRAFO DIRECIONADO ===");
+            // Directed Graph
 
             Graph gListDir = DotParser.parseToList(directedPath);
             DFS dfsDir = new DFS(gListDir);
             dfsDir.execute();
             dfsDir.printResults();
+
+            System.out.println();
 
             Graph gMatDir = DotParser.parseToMatrix(directedPath);
             BFS bfsDir = new BFS(gMatDir);

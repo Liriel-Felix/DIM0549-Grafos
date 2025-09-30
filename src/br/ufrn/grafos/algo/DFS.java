@@ -56,10 +56,10 @@ public class DFS {
     }
 
     public void printResults() {
-        System.out.println("=== RESULTADO DA BUSCA EM PROFUNDIDADE (DFS) ===");
         System.out.println("Tipo do grafo: " + (graph.isDirected() ? "Direcionado" : "Não Direcionado"));
         System.out.println();
 
+        System.out.println("=== DFS ===");
         System.out.println("FLORESTA DFS:");
         for (int i = 0; i < dfsForest.size(); i++) {
             System.out.println("Árvore " + (i + 1) + ": " + dfsForest.get(i));
