@@ -26,6 +26,13 @@ public class Grafo {
     }
 
     public void finalizarEstruturas() {
+        Collections.sort(this.vertices);
+
+        this.indiceVertices.clear();
+        for (int i = 0; i < this.vertices.size(); i++) {
+            this.indiceVertices.put(this.vertices.get(i), i);
+        }
+
         int numVertices = this.vertices.size();
         this.matrizAdjacencia = new boolean[numVertices][numVertices];
     }
@@ -69,5 +76,9 @@ public class Grafo {
 
     public List<String> getVerticesAsList() {
         return this.vertices;
+    }
+
+    public boolean isDirected() {
+        return this.directed;
     }
 }
