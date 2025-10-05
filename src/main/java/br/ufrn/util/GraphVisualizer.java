@@ -1,4 +1,4 @@
-package br.ufrn.grafos;
+package br.ufrn.util;
 
 public class GraphVisualizer {
 }
