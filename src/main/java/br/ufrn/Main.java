@@ -1,5 +1,7 @@
 package br.ufrn;
 
+import br.ufrn.algoritmo.BFS;
+import br.ufrn.algoritmo.ResultadoBuscaBFS;
 import br.ufrn.modelo.Grafo;
 import br.ufrn.util.DotReader;
 
@@ -13,10 +15,15 @@ public class Main {
             System.out.println("Lendo grafo não direcionado...");
             Grafo grafoNaoDirecionado = reader.lerArquivo("samples/undirected_graph.gv");
 
-            // TODO: Chamar algoritmo de BFS
+            BFS bfs = new BFS();
+            ResultadoBuscaBFS resultadoBfsNaoDirecionado = bfs.executar(grafoNaoDirecionado);
+
+            // TODO: Chamar algoritmo de DFS
 
             System.out.println("\nLendo grafo direcionado...");
             Grafo grafoDirecionado = reader.lerArquivo("samples/directed_graph.gv");
+
+            ResultadoBuscaBFS resultadoBfsDirecionado = bfs.executar(grafoDirecionado);
 
             // TODO: Chamar algoritmo de DFS
 

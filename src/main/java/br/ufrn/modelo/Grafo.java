@@ -78,6 +78,10 @@ public class Grafo {
         return this.vertices;
     }
 
+    public Map<String, Integer> getMapaDeIndices() {
+        return this.indiceVertices;
+    }
+
     public boolean isDirected() {
         return this.directed;
     }
