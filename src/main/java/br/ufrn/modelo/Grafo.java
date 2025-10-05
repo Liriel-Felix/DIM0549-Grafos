@@ -6,7 +6,7 @@ public class Grafo {
     private final boolean directed;
     private final List<String> vertices;
     private final Map<String, Integer> indiceVertices;
-    private boolean[][] matrizAdjacencia; // Usamos boolean para grafos não ponderados
+    private boolean[][] matrizAdjacencia;
     private final Map<String, Set<String>> listaAdjacencia;
 
     public Grafo(boolean directed) {
@@ -21,7 +21,6 @@ public class Grafo {
             int novoIndice = vertices.size();
             vertices.add(nome);
             indiceVertices.put(nome, novoIndice);
-            // Usando TreeSet para garantir unicidade e ordem lexicográfica dos vizinhos
             listaAdjacencia.put(nome, new TreeSet<>());
         }
     }
