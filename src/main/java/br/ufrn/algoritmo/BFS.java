@@ -1,7 +1,7 @@
 package br.ufrn.algoritmo;
 
 import br.ufrn.modelo.Grafo;
-
+import br.ufrn.modelo.ResultadoBuscaBFS;
 import java.util.*;
 
 public class BFS {

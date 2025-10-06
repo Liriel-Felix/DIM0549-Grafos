@@ -1,7 +1,7 @@
 package br.ufrn;
 
 import br.ufrn.algoritmo.BFS;
-import br.ufrn.algoritmo.ResultadoBuscaBFS;
+import br.ufrn.modelo.ResultadoBuscaBFS;
 import br.ufrn.modelo.Grafo;
 import br.ufrn.util.DotReader;
 

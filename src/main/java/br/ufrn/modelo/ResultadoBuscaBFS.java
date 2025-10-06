@@ -1,4 +1,4 @@
-package br.ufrn.algoritmo;
+package br.ufrn.modelo;
 
 import java.util.Map;
 import java.util.Set;
