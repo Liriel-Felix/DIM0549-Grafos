@@ -20,6 +20,9 @@ public class DFS {
 
         List<String> vertices = grafo.getVerticesAsList();
 
+        System.out.println("Iniciando DFS");
+        System.out.println();
+
         for (String u : vertices) {
             if (!tempoInicio.containsKey(u)) {
                 dfsVisit(u, grafo);
@@ -42,6 +45,10 @@ public class DFS {
 
         if (listaAdj.containsKey(u)) {
             for (String v : listaAdj.get(u)) {
+
+                List<String> vizinhos = new ArrayList<>(listaAdj.get(u));
+                Collections.sort(vizinhos);
+
                 if (!tempoInicio.containsKey(v)) {
                     this.predecessores.put(v, u);
                     dfsVisit(v, grafo);
@@ -55,20 +62,25 @@ public class DFS {
     }
 
     private void imprimirResultado(List<String> vertices) {
-        System.out.println("\n--- Resultado da Busca por Profundidade ---");
-        System.out.println("Ordem de visitação: " + String.join(" -> ", this.ordemVisitacao));
-        System.out.println("\nDetalhes por Vértice (em ordem lexicográfica):");
+        System.out.println("\n════════════════════════════════════════════════");
+        System.out.println("                RESULTADO DFS");
+        System.out.println("════════════════════════════════════════════════");
+        System.out.println("Ordem de visitação: " + String.join(" → ", this.ordemVisitacao));
+        System.out.println();
+        System.out.println("Vértice   Predecessor   Tempo Início/Fim");
+        System.out.println("─────────────────────────────────────────");
 
-        for(String vertice : vertices) {
-            String pai = this.predecessores.getOrDefault(vertice, "Nenhum (raiz)");
+        // Ordena os vértices lexicograficamente
+        List<String> verticesOrdenados = new ArrayList<>(vertices);
+        Collections.sort(verticesOrdenados);
+
+        for(String vertice : verticesOrdenados) {
+            String pai = this.predecessores.getOrDefault(vertice, "-");
             int tInicio = this.tempoInicio.get(vertice);
             int tFim = this.tempoFim.get(vertice);
-            System.out.println(
-                    "  - Vértice: " + vertice +
-                            ", Predecessor: " + pai +
-                            ", Tempo Início/Fim: " + tInicio + "/" + tFim
-            );
+            System.out.printf("%-9s %-13s %d/%-6d\n",
+                    vertice, pai, tInicio, tFim);
         }
-        System.out.println("-----------------------------------------");
+        System.out.println("════════════════════════════════════════════════\n");
     }
 }
