@@ -25,6 +25,7 @@ public class BFS {
         distancia.put(verticeInicial, 0);
         fila.add(verticeInicial);
 
+        System.out.println();
         System.out.println("Iniciando BFS a partir de: " + verticeInicial);
 
         while (!fila.isEmpty()) {
@@ -52,14 +53,22 @@ public class BFS {
     }
 
     private void imprimirResultado(Set<String> visitados, Map<String, Integer> distancia, Map<String, String> predecessores) {
-        System.out.println("\n--- Resultado da Busca por Largura ---");
-        System.out.println("Ordem de visitação: " + String.join(" -> ", visitados));
-        System.out.println("\nDetalhes por Vértice:");
-        for (String vertice : visitados) {
-            String pai = predecessores.getOrDefault(vertice, "Nenhum (raiz)");
+        System.out.println("\n════════════════════════════════════════");
+        System.out.println("            RESULTADO BFS");
+        System.out.println("════════════════════════════════════════");
+        System.out.println("Ordem de visitação: " + String.join(" → ", visitados));
+        System.out.println();
+        System.out.println("Vértice   Distância   Predecessor");
+        System.out.println("─────────────────────────────────");
+
+        List<String> verticesOrdenados = new ArrayList<>(visitados);
+        Collections.sort(verticesOrdenados);
+
+        for (String vertice : verticesOrdenados) {
+            String pai = predecessores.getOrDefault(vertice, "-");
             int dist = distancia.get(vertice);
-            System.out.println("  - Vértice: " + vertice + ", Distância da raiz: " + dist + ", Predecessor: " + pai);
+            System.out.printf("%-9s %-11d %-15s\n", vertice, dist, pai);
         }
-        System.out.println("------------------------------------");
+        System.out.println("════════════════════════════════════════\n");
     }
 }
